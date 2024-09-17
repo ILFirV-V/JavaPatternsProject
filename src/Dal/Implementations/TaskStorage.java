@@ -1,8 +1,8 @@
 package Dal.Implementations;
 import Models.Implementations.Task;
-
 import java.util.*;
 
+// Паттерн Singleton
 public class TaskStorage {
     private final static TaskStorage instance = new TaskStorage();;
     private Map<UUID, Task> tasks = new HashMap<>();
