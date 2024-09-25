@@ -30,4 +30,8 @@ public class TaskManager {
     public Task getShowTask(UUID taskId) {
         return taskService.getTaskById(taskId);
     }
+
+    public void updateTaskState(UUID taskId) {
+        taskService.updateTaskState(taskId);
+    }
 }

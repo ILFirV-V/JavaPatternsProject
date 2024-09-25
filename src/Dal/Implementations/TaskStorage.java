@@ -1,7 +1,6 @@
 package Dal.Implementations;
 import Models.Implementations.Task;
 import java.util.*;
-
 // Паттерн Singleton
 public class TaskStorage {
     private final static TaskStorage instance = new TaskStorage();;
@@ -14,22 +13,10 @@ public class TaskStorage {
     }
 
     public void addOrUpdateTask(Task task) {
-        var index = -1;
-        for(var i = 0; i < tasks.size(); i++)
-        {
-            if(tasks.get(i).getId() == task.getId())
-            {
-                index = i;
-                break;
-            }
-        }
-        if(index == -1)
-        {
-            tasks.put(task.getId(), task);
-        }
-        else
-        {
+        if (tasks.containsKey(task.getId())) {
             tasks.replace(task.getId(), task);
+        } else {
+            tasks.put(task.getId(), task);
         }
     }
 

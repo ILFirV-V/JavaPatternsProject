@@ -1,24 +1,33 @@
 package Models.Implementations;
-import java.util.UUID;
+import Models.Implementations.Enums.TaskCompletionStatus;
 
+import java.util.UUID;
+// Паттерн Prototype (getClone)
+// Паттерн Static Factory Method (getCompletedTask)
 public class Task {
     private String name;
     private String description;
-    private boolean completed;
     private final UUID id;
+    private TaskCompletionStatus completionStatus;
 
     public Task(String name, String description) {
         this.name = name;
         this.description = description;
-        this.completed = false;
         this.id = UUID.randomUUID();
+        this.completionStatus = TaskCompletionStatus.ASSIGNED;
     }
 
     private Task(Task oldTask) {
         this.name = oldTask.getName();
         this.description = oldTask.getDescription();
-        this.completed = oldTask.isCompleted();
         this.id = oldTask.getId();
+        this.completionStatus = oldTask.getCompletedStatus();
+    }
+
+    public Task createCompletedTask(String name, String description) {
+        var newTask = new Task(name, description);
+        newTask.completionStatus = TaskCompletionStatus.COMPLETED;
+        return newTask;
     }
 
     public String getName() {
@@ -33,12 +42,12 @@ public class Task {
         return id;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public TaskCompletionStatus getCompletedStatus() {
+        return completionStatus;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void updateCompletedStatus() {
+        this.completionStatus = this.completionStatus.nextStatus();
     }
 
     public Task getClone() {

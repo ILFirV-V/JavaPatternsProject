@@ -19,8 +19,9 @@ public class TaskViewManager {
             System.out.println("Выберите действие: ");
             System.out.println("1. Добавить задачу");
             System.out.println("2. Удалить задачу");
-            System.out.println("3. Показать задачи");
-            System.out.println("4. Выход");
+            System.out.println("3. Изменить статус задачи");
+            System.out.println("4. Показать задачи");
+            System.out.println("5. Выход");
 
             var choice = scanner.nextInt();
             scanner.nextLine();
@@ -46,10 +47,22 @@ public class TaskViewManager {
                     taskManager.removeTask(taskId);
                     break;
                 case 3:
+                    var showUpdateTasks = taskManager.getShowTasks();
+                    showTasks(showUpdateTasks);
+                    System.out.print("Введите номер задачи для изменения статуса: ");
+                    var updateTaskIndex = scanner.nextInt() - 1;
+                    if (updateTaskIndex < 0 || updateTaskIndex >= showUpdateTasks.size()) {
+                        System.out.println("Неверный номер задачи.");
+                        break;
+                    }
+                    var updateTaskId = showUpdateTasks.get(updateTaskIndex).getId();
+                    taskManager.updateTaskState(updateTaskId);
+                    break;
+                case 4:
                     var showTasks = taskManager.getShowTasks();
                     showTasks(showTasks);
                     break;
-                case 4:
+                case 5:
                     System.out.println("Выход из программы.");
                     return;
                 default:
@@ -66,7 +79,7 @@ public class TaskViewManager {
 
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            System.out.println((i + 1) + ". " + task.getName() + " (" + task.getDescription() + ")");
+            System.out.println((i + 1) + ". " + task.getName() + " (" + task.getDescription() + ")" + "статус: " + task.getCompletedStatus().getRussianText());
         }
     }
 }

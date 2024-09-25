@@ -30,6 +30,13 @@ public class TaskService extends BaseTaskService {
     }
 
     @Override
+    public void updateTaskState(UUID takId) {
+        var task = storage.getTaskById(takId);
+        task.updateCompletedStatus();
+        storage.addOrUpdateTask(task);
+    }
+
+    @Override
     public void removeTaskById(UUID takId) {
         storage.removeTask(takId);
     }
