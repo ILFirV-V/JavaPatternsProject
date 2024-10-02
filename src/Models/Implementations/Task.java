@@ -1,4 +1,5 @@
 package Models.Implementations;
+import Helpers.TaskBuilder;
 import Models.Implementations.Enums.TaskCompletionStatus;
 
 import java.util.UUID;
@@ -52,5 +53,10 @@ public class Task {
 
     public Task getClone() {
         return new Task(this);
+    }
+
+    public TaskBuilder builder()
+    {
+        return new TaskBuilder();
     }
 }
