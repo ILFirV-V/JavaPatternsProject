@@ -1,5 +1,4 @@
 package Models.Implementations;
-import Helpers.TaskBuilder;
 import Models.Implementations.Enums.TaskCompletionStatus;
 
 import java.util.UUID;
@@ -16,6 +15,13 @@ public class Task {
         this.description = description;
         this.id = UUID.randomUUID();
         this.completionStatus = TaskCompletionStatus.ASSIGNED;
+    }
+
+    private Task(String name, String description, TaskCompletionStatus completionStatus) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+        this.description = description;
+        this.completionStatus = completionStatus;
     }
 
     private Task(Task oldTask) {
@@ -58,5 +64,33 @@ public class Task {
     public TaskBuilder builder()
     {
         return new TaskBuilder();
+    }
+
+    // Паттерн Builder
+    public class TaskBuilder {
+        private String name;
+        private String description;
+        private TaskCompletionStatus completionStatus = TaskCompletionStatus.ASSIGNED;
+
+        private TaskBuilder() { }
+
+        public TaskBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public TaskBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public TaskBuilder completionStatus(TaskCompletionStatus completionStatus) {
+            this.completionStatus = completionStatus;
+            return this;
+        }
+
+        public Task build() {
+            return new Task(name, description, completionStatus);
+        }
     }
 }
