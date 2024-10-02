@@ -54,7 +54,7 @@
 
 ### Задание 5. Builder (TaskBuilder)
 
-Класс: TaskBuilder [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Helpers/TaskBuilder.java)
+Класс: TaskBuilder [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Models/Implementations/Task.java)
 
 Описание:
 
@@ -69,7 +69,7 @@
 * Упрощение: Не нужно передавать множество параметров в конструктор, что делает код более читаемым и понятным.
 
 Почему это Builder:
-
+* Внутренний класс: TaskBuilder является вложенным классом Task, что позволяет ему получить доступ к приватным полям и методам Task.
 * Методы name(), description():  Позволяют устанавливать значения атрибутов задачи по отдельности.
 * Метод build():  Возвращает новый объект Task, созданный на основе установленных значений.
 * Метод builder(): У Task есть метод builder() для получения TaskBuilder.
