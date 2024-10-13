@@ -1,33 +1,39 @@
 package Models.Implementations;
+import Models.Abstractions.BaseEntity;
+import Models.Abstractions.IClone;
 import Models.Implementations.Enums.TaskCompletionStatus;
-
 import java.util.UUID;
+
 // Паттерн Prototype (getClone)
-// Паттерн Static Factory Method (getCompletedTask)
-public class Task {
+// Паттерн Static Factory Method (createCompletedTask, createExampleTask)
+// Паттерн Builder (TaskBuilder)
+public class Task
+        extends BaseEntity
+        implements IClone<Task>
+{
     private String name;
     private String description;
-    private final UUID id;
     private TaskCompletionStatus completionStatus;
 
-    public Task(String name, String description) {
+    public Task(String name, String description)
+    {
+        super(UUID.randomUUID());
         this.name = name;
         this.description = description;
-        this.id = UUID.randomUUID();
         this.completionStatus = TaskCompletionStatus.ASSIGNED;
     }
 
     private Task(String name, String description, TaskCompletionStatus completionStatus) {
-        this.id = UUID.randomUUID();
+        super(UUID.randomUUID());
         this.name = name;
         this.description = description;
         this.completionStatus = completionStatus;
     }
 
     private Task(Task oldTask) {
+        super(oldTask.getId());
         this.name = oldTask.getName();
         this.description = oldTask.getDescription();
-        this.id = oldTask.getId();
         this.completionStatus = oldTask.getCompletedStatus();
     }
 
@@ -35,6 +41,12 @@ public class Task {
         var newTask = new Task(name, description);
         newTask.completionStatus = TaskCompletionStatus.COMPLETED;
         return newTask;
+    }
+
+    public Task createExampleTask() {
+        var exampleTaskName = "Пример задачи";
+        var exampleTaskDescription = "Здесь пример описания";
+        return new Task(exampleTaskName, exampleTaskDescription);
     }
 
     public String getName() {
@@ -45,6 +57,7 @@ public class Task {
         return description;
     }
 
+    @Override
     public UUID getId() {
         return id;
     }
@@ -57,6 +70,7 @@ public class Task {
         this.completionStatus = this.completionStatus.nextStatus();
     }
 
+    @Override
     public Task getClone() {
         return new Task(this);
     }
@@ -66,7 +80,6 @@ public class Task {
         return new TaskBuilder();
     }
 
-    // Паттерн Builder
     public class TaskBuilder {
         private String name;
         private String description;

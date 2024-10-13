@@ -17,14 +17,10 @@ public enum TaskCompletionStatus {
     }
 
     public TaskCompletionStatus nextStatus() {
-        switch (this) {
-            case ASSIGNED:
-                return IN_PROGRESS;
-            case IN_PROGRESS:
-                return COMPLETED;
-            case COMPLETED:
-                return COMPLETED; // нужно оставаться на COMPLETED
-        }
-        throw new IllegalStateException("Unexpected status: " + this);
+        return switch (this) {
+            case ASSIGNED -> IN_PROGRESS;
+            case IN_PROGRESS -> COMPLETED;
+            case COMPLETED -> COMPLETED; // нужно оставаться на COMPLETED
+        };
     }
 }

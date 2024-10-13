@@ -1,43 +1,39 @@
 package Services;
-
 import Dal.Implementations.TaskStorage;
 import Models.Implementations.Task;
-
 import java.util.List;
 import java.util.UUID;
 
 public class TaskService extends BaseTaskService {
-    private final TaskStorage storage;
-
     public TaskService() {
-        this.storage = TaskStorage.getInstance();
+        super(TaskStorage.getInstance());
     }
 
     @Override
-    public void createTask(String name, String description) {
+    public void create(String name, String description) {
         var task = new Task(name, description);
-        storage.addOrUpdateTask(task);
+        storage.addOrUpdate(task);
     }
 
     @Override
-    public Task getTaskById(UUID takId) {
-        return storage.getTaskById(takId);
+    public Task getById(UUID id) {
+        return storage.getById(id);
     }
 
     @Override
-    public List<Task> getTasks() {
-        return storage.getTasks();
+    public List<Task> getAll() {
+        return storage.getAll();
     }
 
     @Override
-    public void updateTaskState(UUID takId) {
-        var task = storage.getTaskById(takId);
+    public void updateState(UUID id) {
+        var task = storage.getById(id);
         task.updateCompletedStatus();
-        storage.addOrUpdateTask(task);
+        storage.addOrUpdate(task);
     }
 
     @Override
-    public void removeTaskById(UUID takId) {
-        storage.removeTask(takId);
+    public void removeById(UUID id) {
+        storage.remove(id);
     }
 }

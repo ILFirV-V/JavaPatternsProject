@@ -1,18 +1,11 @@
 package Services;
-
+import Dal.Abstractions.BaseStorage;
 import Models.Implementations.Task;
 
-import java.util.List;
-import java.util.UUID;
+public abstract class BaseTaskService extends BaseService<Task> {
+    protected BaseTaskService(BaseStorage<Task> storage) {
+        super(storage);
+    }
 
-public abstract class BaseTaskService {
-    public abstract void createTask(String name, String description);
-
-    public abstract Task getTaskById(UUID takId);
-
-    public abstract List<Task> getTasks();
-
-    public abstract void removeTaskById(UUID takId);
-
-    public abstract void updateTaskState(UUID takId);
+    public abstract void create(String name, String description);
 }
