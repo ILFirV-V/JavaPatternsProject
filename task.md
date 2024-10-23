@@ -100,3 +100,60 @@
 * BaseService хранит в поле объект BaseStorage, что устанавливает связь между ними.
 * BaseStorage и BaseService могут быть изменены независимо друг от друга. У каждого у них своя ветка развития, 
      что уменьшает количество создаваемых классов.
+
+### Задание 9. Composite (Task)
+
+Класс: Task [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Models/Implementations/Task.java)
+
+Описание:
+
+Реализация:
+
+*  Реализует интерфейс ITaskNodeComponent, предоставляя методы completedDisplay, add, remove, getClone.
+*  Имеет поле subComponents типа List<ITaskNodeComponent>, которое позволяет хранить подзадачи.
+*  Методы add и remove позволяют управлять списком подзадач.
+*  Метод completedDisplay устанавливает статус "Завершено" для текущей задачи и всех ее подзадач рекурсивно.
+*  Метод getClone создает глубокую копию текущей задачи, включая копии всех ее подзадач.
+
+Причины реализации Composite:
+
+*  Иерархическая структура:  Паттерн Composite позволяет моделировать иерархическую структуру задач, где одна задача может
+содержать другие задачи.
+*  Единый интерфейс для работы с задачами:  Благодаря интерфейсу ITaskNodeComponent код может работать с отдельными
+задачами и группами задач одинаково.
+*  Рекурсивное поведение:  Метод completedDisplay демонстрирует рекурсивное поведение, которое позволяет распространять
+изменения статуса на все подзадачи.
+
+Почему это Composite:
+
+*  Реализует интерфейс ITaskNodeComponent (компонент композита).
+*  Имеет поле для хранения подзадач (subComponents).
+*  Предоставляет методы для управления подзадачами (add, remove).
+*  Методы completedDisplay и getClone реализованы таким образом, чтобы рекурсивно обрабатывать подзадачи.
+
+### Задание 10. Decorator (TaskNotifier)
+
+Классы: ITaskNotifier [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Services/Notifier/ITaskNotifier.java), 
+        DefaultTaskNotifier [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Services/Notifier/DefaultTaskNotifier.java), 
+        EmailNotifier [ссылка](https://github.com/ILFirV-V/JavaPatternsProject/blob/master/src/Services/Notifier/EmailNotifier.java)
+
+Описание:
+
+Реализация:
+
+* Интерфейс ITaskNotifier: Определяет контракт для уведомления о смене статуса задачи.
+* DefaultTaskNotifier: Базовая реализация, ничего не делает.
+* EmailNotifier: Декоратор, расширяет функциональность базового нотификатора, отправляя уведомления по email.
+
+Причины реализации Decorator:
+
+* Гибкость: Позволяет добавлять или удалять уведомления без изменения основного кода.
+* Расширяемость: Можно легко создавать новые декораторы для других типов уведомлений, например, для отправки SMS или
+push-уведомлений.
+
+Почему это Decorator:
+
+* Декоратор: EmailNotifier расширяет функциональность базового нотификатора (DefaultTaskNotifier).
+* Делегирование: EmailNotifier использует делегирование для вызова метода notifyStatusChange базового нотификатора.
+* Добавление функциональности: EmailNotifier добавляет свою функциональность: отправку email (в данном примере -
+симуляция с помощью System.out.println).
